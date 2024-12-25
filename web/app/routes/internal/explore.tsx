@@ -3,7 +3,7 @@ import { SwipeableTabs } from "~/components/shared/SwipeableTabs";
 export default function Explore() {
   return (
     <SwipeableTabs
-      cursorWidth={80}
+      cursorWidth={50}
       onSelectedKeyChange={(key) => console.log(key)}
       classNames={{ tabListWrapper: "sticky top-0 z-[99]" }}
       tabs={[
