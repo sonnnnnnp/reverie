@@ -1,26 +1,41 @@
-import { Tab, Tabs } from "@nextui-org/react";
+import React from "react";
+import type { Key } from "react-aria-components";
+import { SwipeableTabs } from "~/components/shared/SwipeableTabs";
 import { Timeline } from "~/components/timeline/Timeline";
 
 export default function Home() {
+  const [currentTabKey, setCurrentTabKey] = React.useState<Key>("following");
+
   return (
-    <Tabs
-      aria-label="timeline-tab"
-      variant="underlined"
-      fullWidth
+    <SwipeableTabs
+      cursorWidth={80}
+      onSelectedKeyChange={(key) => setCurrentTabKey(key)}
       classNames={{
-        base: "sticky top-0 backdrop-blur-md border-b z-[99]",
-        tabList: "p-0",
-        tab: "h-14 font-bold",
-        cursor: "w-20",
-        panel: "p-0",
+        tabListWrapper: "sticky top-0 z-[99] backdrop-blur-md border-b",
       }}
-    >
-      <Tab key="following" title="フォロー中">
-        <Timeline type="following" />
-      </Tab>
-      <Tab key="public" title="発見">
-        <Timeline type="public" />
-      </Tab>
-    </Tabs>
+      tabs={[
+        {
+          key: "following",
+          title: "フォロー中",
+          panelContent: (
+            <div>
+              <Timeline
+                type="following"
+                selected={currentTabKey === "following"}
+              />
+            </div>
+          ),
+        },
+        {
+          key: "public",
+          title: "発見",
+          panelContent: (
+            <div>
+              <Timeline type="public" selected={currentTabKey === "public"} />
+            </div>
+          ),
+        },
+      ]}
+    />
   );
 }

@@ -1,8 +1,13 @@
 import { cn } from "@nextui-org/react";
-import useEmblaCarousel from "embla-carousel-react";
-import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
-import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import {
+  type AnimationPlaybackControls,
+  animate,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import React from "react";
 import {
   Tab as AriaTab,
   TabList as AriaTabList,
@@ -33,7 +38,7 @@ export function SwipeableTabs({
   tabs,
   classNames,
   cursorWidth,
-  // defaultKey,
+  defaultKey,
   onSelectedKeyChange,
 }: {
   tabs: Tab[];
@@ -42,101 +47,164 @@ export function SwipeableTabs({
   defaultKey?: string;
   onSelectedKeyChange?: (key: Key) => void;
 }) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedKey, setSelectedKey] = React.useState<Key>(
+    defaultKey ?? tabs[0].key,
+  );
+  const [tabElements, setTabElements] = React.useState<
+    NodeListOf<HTMLDivElement> | []
+  >([]);
 
-  const [carouselRef, carouselApi] = useEmblaCarousel(
-    {
-      loop: false,
-      align: "start",
-      skipSnaps: false,
-    },
-    [WheelGesturesPlugin()],
+  const tabListRef = React.useRef<HTMLDivElement | null>(null);
+  const tabPanelsRef = React.useRef<HTMLDivElement | null>(null);
+  const animationRef = React.useRef<AnimationPlaybackControls | null>(null);
+
+  const indicatorWidth = cursorWidth ?? 50;
+
+  React.useEffect(() => {
+    if (tabElements.length === 0 && tabListRef.current !== null) {
+      const tabs = tabListRef.current.querySelectorAll(
+        "[role=tab]",
+      ) as NodeListOf<HTMLDivElement>;
+      setTabElements(tabs);
+    }
+  }, [tabElements]);
+
+  const { scrollXProgress } = useScroll({
+    container: tabPanelsRef,
+  });
+
+  const getTabIndex = React.useCallback(
+    (x: number) => Math.round((tabs.length - 1) * x),
+    [tabs],
   );
 
-  const handleCarouselSelect = useCallback(() => {
-    if (carouselApi) {
-      const index = carouselApi.selectedScrollSnap();
-      setSelectedIndex(index);
+  const getCursorIndex = React.useCallback(
+    (x: number) => Math.max(0, Math.floor((tabs.length - 1) * x)),
+    [tabs],
+  );
 
-      onSelectedKeyChange?.(tabs[index].key);
-    }
-  }, [carouselApi, tabs, onSelectedKeyChange]);
+  const transform = (x: number, property: "offsetLeft" | "offsetWidth") => {
+    if (!tabElements.length) return 0;
 
-  useEffect(() => {
-    if (carouselApi) {
-      carouselApi.on("select", handleCarouselSelect);
-    }
-    return () => {
-      if (carouselApi) {
-        carouselApi.off("select", handleCarouselSelect);
-      }
-    };
-  }, [carouselApi, handleCarouselSelect]);
+    const index = getCursorIndex(x);
+    const difference =
+      index < tabElements.length - 1
+        ? tabElements[index + 1][property] - tabElements[index][property]
+        : tabElements[index].offsetWidth;
+    const percent = (tabElements.length - 1) * x - index;
+    const value = tabElements[index][property] + difference * percent;
 
-  const onSelectionChange = (selectedTab: Key) => {
-    const index = tabs.findIndex((tab) => tab.key === selectedTab);
-    if (index !== -1) {
-      setSelectedIndex(index);
-      carouselApi?.scrollTo(index);
-    }
+    // iOS scrolls weird when translateX is 0 for some reason. 🤷‍♂️
+    return value || 0.1;
   };
 
-  const calculateCursorTransform = () => {
-    cursorWidth = cursorWidth ?? 100;
-    const multiplier = 100 / cursorWidth;
-    const offset = ((100 - cursorWidth) * multiplier) / 2;
-    return `translateX(${selectedIndex * 100 * multiplier + offset}%)`;
+  const x = useTransform(
+    scrollXProgress,
+    (x) =>
+      transform(x, "offsetLeft") +
+      transform(x, "offsetWidth") / 2 -
+      indicatorWidth / 2,
+  );
+
+  useMotionValueEvent(scrollXProgress, "change", (x) => {
+    if (!tabElements.length) return;
+
+    const index = getTabIndex(x);
+    if (tabs[index]?.key !== selectedKey) {
+      setSelectedKey(tabs[index]?.key);
+      onSelectedKeyChange?.(tabs[index]?.key);
+    }
+  });
+
+  const onSelectionChange = (selectedTab: Key) => {
+    if (selectedTab === selectedKey) return;
+
+    if (scrollXProgress.getVelocity() && !animationRef.current) {
+      return;
+    }
+
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    const tabPanel = tabPanelsRef.current!;
+    const index = tabs.findIndex((tab) => tab.key === selectedTab);
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
+
+    animationRef.current = animate(
+      tabPanel?.scrollLeft,
+      // biome-ignore lint/style/noNonNullAssertion: <explanation>
+      tabPanel?.scrollWidth! * (index / tabs.length),
+      {
+        type: "spring",
+        bounce: 0,
+        duration: 0.6,
+        onUpdate: (v) => {
+          tabPanel.scrollLeft = v;
+        },
+        onPlay: () => {
+          tabPanel.style.scrollSnapType = "none";
+        },
+        onComplete: () => {
+          tabPanel.style.scrollSnapType = "";
+          animationRef.current = null;
+        },
+      },
+    );
   };
 
   return (
     <AriaTabs
-      selectedKey={tabs[selectedIndex].key}
+      selectedKey={selectedKey}
       onSelectionChange={onSelectionChange}
       className={cn("w-full h-full", classNames?.base)}
     >
       <div className={cn("relative", classNames?.tabListWrapper)}>
         <AriaTabList
+          ref={tabListRef}
           items={tabs}
           className={cn("flex h-14", classNames?.tabList)}
         >
-          {(tab) => (
+                {(tab) => (
             <AriaTab
               className={cn(
-                "grid place-items-center w-full cursor-pointer text-small text-default-500 transition-opacity rac-hover:opacity-disabled rac-hover:rac-selected:opacity-100 rac-selected:text-foreground",
+                "grid place-items-center w-full cursor-pointer text-small text-default-500 transition-opacity outline-0 focus:ring-0 rac-hover:opacity-disabled rac-hover:rac-selected:opacity-100 rac-selected:text-foreground",
                 classNames?.tab,
               )}
             >
-              <span className={cn(classNames?.title)}>{tab.title}</span>
+              <span className={cn("font-medium", classNames?.title)}>
+                {tab.title}
+              </span>
             </AriaTab>
           )}
         </AriaTabList>
-        <div
+        <motion.span
+          style={{ x, width: indicatorWidth }}
           className={cn(
-            "absolute bottom-0 h-0.5 bg-content1-foreground rounded-full transition-transform duration-300 ease-in-out",
+            "absolute bottom-0 h-0.5 z-10 bg-content1-foreground rounded-full",
             classNames?.cursor,
           )}
-          style={{
-            width: `${(cursorWidth ?? 100) / tabs.length}%`,
-            transform: calculateCursorTransform(),
-          }}
         />
       </div>
-      <div ref={carouselRef} className="overflow-hidden">
-        <div className={cn("flex w-full", classNames?.panelWrapper)}>
-          <Collection items={tabs}>
-            {(tab) => (
-              <AriaTabPanel
-                shouldForceMount
-                className={cn(
-                  "w-full snap-start flex-shrink-0",
-                  classNames?.panel,
-                )}
-              >
-                {tab.panelContent}
-              </AriaTabPanel>
-            )}
-          </Collection>
-        </div>
+      <div
+        ref={tabPanelsRef}
+        className={cn(
+          "flex w-full overflow-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+          classNames?.panelWrapper,
+        )}
+      >
+        <Collection items={tabs}>
+          {(tab) => (
+            <AriaTabPanel
+              shouldForceMount
+              className={cn(
+                "w-full snap-start snap-always flex-shrink-0",
+                classNames?.panel,
+              )}
+            >
+              {tab.panelContent}
+            </AriaTabPanel>
+          )}
+        </Collection>
       </div>
     </AriaTabs>
   );
