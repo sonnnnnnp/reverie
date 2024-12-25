@@ -10,7 +10,7 @@ import {
 
 export function SmallNavigation({ pathname }: { pathname: string }) {
   return (
-    <div className="sticky inset-y-0 h-dvh w-16 px-2 py-4 flex-shrink-0 border-r hidden md:block lg:hidden">
+    <div className="sticky inset-y-0 h-dvh w-16 px-2 py-4 flex-shrink-0 border-r hidden sm:block lg:hidden">
       <Listbox
         aria-label="Actions"
         selectionMode="single"
@@ -35,8 +35,8 @@ export function SmallNavigation({ pathname }: { pathname: string }) {
           startContent={<SolarMagniferLinear />}
         />
         <ListboxItem
-          key="/groups"
-          href="/groups"
+          key="/communities"
+          href="/communities"
           title="グループ"
           startContent={<SolarUsersGroupTwoRoundedLinear />}
         />

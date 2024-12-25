@@ -9,7 +9,7 @@ export default [
   layout("routes/internal/layout.tsx", [
     route("home", "routes/internal/home.tsx"),
     route("explore", "routes/internal/explore.tsx"),
-    route("groups", "routes/internal/groups.tsx"),
+    route("communities", "routes/internal/communities.tsx"),
     route("messages", "routes/internal/messages.tsx"),
     route("notifications", "routes/internal/notifications.tsx"),
     route("users", "routes/internal/users.tsx"),

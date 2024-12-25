@@ -8,7 +8,7 @@ import {
 
 export function MobileNavigation({ pathname }: { pathname: string }) {
   return (
-    <div className="fixed bottom-0 w-full backdrop-blur-md z-[99] border-t md:hidden">
+    <div className="fixed bottom-0 w-full backdrop-blur-md z-[99] border-t sm:hidden">
       <Tabs
         fullWidth
         selectedKey={pathname}
@@ -22,8 +22,8 @@ export function MobileNavigation({ pathname }: { pathname: string }) {
       >
         <Tab key="/home" href="/home" title={<SolarHome2Linear />} />
         <Tab
-          key="/groups"
-          href="/groups"
+          key="/communities"
+          href="/communities"
           title={<SolarUsersGroupTwoRoundedLinear />}
         />
         <Tab key="/messages" href="/messages" title={<SolarLetterLinear />} />

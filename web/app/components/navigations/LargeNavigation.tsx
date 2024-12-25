@@ -88,13 +88,13 @@ export function LargeNavigation({ pathname }: { pathname: string }) {
           }
         />
         <ListboxItem
-          key="/groups"
-          href="/groups"
+          key="/communities"
+          href="/communities"
           title="グループ"
           startContent={
             <span className="flex items-center gap-4 ml-2 text-small font-medium">
               <SolarUsersGroupTwoRoundedLinear />
-              グループ
+              コミュニティ
             </span>
           }
         />
