@@ -1,4 +1,4 @@
-import { cn } from "@nextui-org/react";
+import { cn } from "~/lib/utils/cn";
 
 export function PostContentBody({
   className,

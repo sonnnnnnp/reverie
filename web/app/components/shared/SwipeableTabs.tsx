@@ -1,4 +1,3 @@
-import { cn } from "@nextui-org/react";
 import {
   type AnimationPlaybackControls,
   animate,
@@ -16,6 +15,7 @@ import {
   Collection,
   type Key,
 } from "react-aria-components";
+import { cn } from "~/lib/utils/cn";
 
 type Tab = {
   key: string;
@@ -164,7 +164,7 @@ export function SwipeableTabs({
           items={tabs}
           className={cn("flex h-14", classNames?.tabList)}
         >
-                {(tab) => (
+          {(tab) => (
             <AriaTab
               className={cn(
                 "grid place-items-center w-full cursor-pointer text-small text-default-500 transition-opacity outline-0 focus:ring-0 rac-hover:opacity-disabled rac-hover:rac-selected:opacity-100 rac-selected:text-foreground",

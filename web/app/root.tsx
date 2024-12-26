@@ -56,7 +56,7 @@ export default function App() {
           <ScrollRestoration />
           <Scripts />
         </NextUIProvider>
-        <BackgroundTexture />
+        <BackgroundTexture className="" />
       </body>
     </html>
   );
