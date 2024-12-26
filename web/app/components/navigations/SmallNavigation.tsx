@@ -1,23 +1,33 @@
-import { Avatar, Badge, Listbox, ListboxItem } from "@nextui-org/react";
+import {
+  Avatar,
+  Badge,
+  Listbox,
+  ListboxItem,
+  useDisclosure,
+} from "@nextui-org/react";
 import {
   SolarBellLinear,
   SolarHome2Linear,
   SolarLetterLinear,
   SolarMagniferLinear,
+  SolarPenNewSquareLinear,
   SolarSettingsLinear,
   SolarUsersGroupTwoRoundedLinear,
 } from "~/components/icons";
+import { PostModal } from "../posts/PostModal";
 
 export function SmallNavigation({ pathname }: { pathname: string }) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
-    <div className="sticky inset-y-0 h-dvh w-16 px-2 py-4 flex-shrink-0 border-r hidden sm:block lg:hidden">
+    <div className="sticky inset-y-0 h-dvh w-16 py-4 flex-shrink-0 border-r hidden sm:block lg:hidden">
       <Listbox
         aria-label="Actions"
         selectionMode="single"
         selectedKeys={[pathname]}
-        className="h-full [&>ul]:h-full"
+        classNames={{ base: "h-full", list: "h-full" }}
         itemClasses={{
-          base: "w-10 h-10 rounded-full transition-colors mb-4 text-default-500 data-[selected=true]:bg-default data-[selected=true]:text-default-foreground last:mb-0",
+          base: "w-10 h-10 mx-auto rounded-full transition-colors mb-4 text-default-500 data-[selected=true]:bg-default data-[selected=true]:text-default-foreground last:mb-0",
           title: "hidden",
           selectedIcon: "hidden",
         }}
@@ -57,6 +67,14 @@ export function SmallNavigation({ pathname }: { pathname: string }) {
           }
         />
         <ListboxItem
+          onPress={onOpen}
+          title="投稿"
+          className="mt-2 w-12 h-12 bg-foreground text-default data-[hover=true]:bg-foreground data-[hover=true]:text-default data-[hover=true]:opacity-hover data-[pressed=true]:scale-[0.97] data-[selectable=true]:focus:bg-foreground data-[selectable=true]:focus:text-default data-[selected=true]:bg-foreground data-[selected=true]:text-default"
+          startContent={
+            <SolarPenNewSquareLinear className="mx-auto" strokeWidth={2} />
+          }
+        />
+        <ListboxItem
           key="/settings"
           href="/settings"
           title="設定"
@@ -76,6 +94,7 @@ export function SmallNavigation({ pathname }: { pathname: string }) {
           }
         />
       </Listbox>
+      <PostModal isOpen={isOpen} onOpenChange={onOpenChange} />
     </div>
   );
 }

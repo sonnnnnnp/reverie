@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import { Navigation } from "~/components/navigations/Navigation";
+import { MobileComposeButton } from "~/components/shared/MobileComposeButton";
 import { WidgetList } from "~/components/widgets/WidgetList";
 import { AuthProvider } from "~/providers/AuthProvider";
 
@@ -12,6 +13,7 @@ export default function Layout() {
           <Outlet />
         </main>
         <WidgetList />
+        <MobileComposeButton />
       </div>
     </AuthProvider>
   );

@@ -16,7 +16,7 @@ export default function UserProfile() {
           src="https://i.pravatar.cc/150?u=a04258114e29026708c"
         />
       </div>
-      <div className="flex justify-end space-x-2 pt-4 px-6">
+      <div className="flex justify-end gap-2 pt-4 px-6">
         <Button
           isIconOnly
           variant="bordered"

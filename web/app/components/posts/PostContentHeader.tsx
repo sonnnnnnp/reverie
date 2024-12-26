@@ -1,5 +1,5 @@
 import { Avatar } from "@nextui-org/react";
-import { timeAgo } from "~/lib/utils/date";
+import { timeAgo } from "~/utils/date";
 
 export function PostContentHeader({
   nickname,

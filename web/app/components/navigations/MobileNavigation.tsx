@@ -8,7 +8,7 @@ import {
 
 export function MobileNavigation({ pathname }: { pathname: string }) {
   return (
-    <div className="fixed bottom-0 w-full backdrop-blur-md z-[99] border-t sm:hidden">
+    <div className="fixed bottom-0 w-full bg-background z-[99] border-t sm:hidden">
       <Tabs
         fullWidth
         selectedKey={pathname}

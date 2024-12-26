@@ -4,7 +4,7 @@ import { Widget } from "./Widget";
 
 export function WidgetList() {
   return (
-    <div className="sticky inset-y-0 h-dvh w-72 p-4 flex-shrink-0 border-l hidden md:block">
+    <div className="sticky inset-y-0 h-dvh w-72 p-4 flex-shrink-0 border-l overflow-y-auto hidden md:block">
       <div className="grid gap-4">
         <Input
           fullWidth

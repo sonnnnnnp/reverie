@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
-import { cn } from "~/lib/utils/cn";
+import { cn } from "~/utils/cn";
 
 export const WavyBackground = ({
   children,

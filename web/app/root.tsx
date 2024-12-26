@@ -16,6 +16,7 @@ import stylesheet from "./app.css?url";
 import { NextUIProvider } from "@nextui-org/react";
 
 import { BackgroundTexture } from "./components/shared/BackgroundTexture";
+import { ScrollProvider } from "./providers/ScrollProvider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -50,9 +51,9 @@ export default function App() {
       </head>
       <body className="dark font-primary text-foreground bg-background">
         <NextUIProvider navigate={navigate} useHref={useHref}>
-          <div className="fixed top-0 left-0 w-full h-dvh overflow-y-scroll text-foreground bg-background">
+          <ScrollProvider>
             <Outlet />
-          </div>
+          </ScrollProvider>
           <ScrollRestoration />
           <Scripts />
         </NextUIProvider>
