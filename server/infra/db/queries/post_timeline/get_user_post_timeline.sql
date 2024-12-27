@@ -1,4 +1,4 @@
--- name: GetUserTimeline :many
+-- name: GetUserPostTimeline :many
 SELECT
     sqlc.embed(posts),
     sqlc.embed(users),

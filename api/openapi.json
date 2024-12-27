@@ -1336,7 +1336,7 @@
         "summary": "オープンのタイムラインを取得する",
         "deprecated": false,
         "description": "",
-        "operationId": "getTimeline",
+        "operationId": "getPostTimeline",
         "tags": [],
         "parameters": [
           {
@@ -1403,7 +1403,7 @@
         "summary": "ユーザーのタイムラインを取得する",
         "deprecated": false,
         "description": "",
-        "operationId": "getUserTimeline",
+        "operationId": "getUserPostTimeline",
         "tags": [],
         "parameters": [
           {
@@ -1480,7 +1480,7 @@
         "summary": "フォロー中のタイムラインを取得する",
         "deprecated": false,
         "description": "",
-        "operationId": "getFollowingTimeline",
+        "operationId": "getFollowingPostTimeline",
         "tags": [],
         "parameters": [
           {

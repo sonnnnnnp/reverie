@@ -5,8 +5,8 @@ sql:
       - ./infra/db/queries/call
       - ./infra/db/queries/call_timeline
       - ./infra/db/queries/post_favorites
+      - ./infra/db/queries/post_timeline
       - ./infra/db/queries/posts
-      - ./infra/db/queries/timeline
       - ./infra/db/queries/user_blocks
       - ./infra/db/queries/user_follows
       - ./infra/db/queries/users

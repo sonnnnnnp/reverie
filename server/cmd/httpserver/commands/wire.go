@@ -15,7 +15,7 @@ import (
 	"github.com/sonnnnnnp/reverie/server/usecase/call_timeline"
 	"github.com/sonnnnnnp/reverie/server/usecase/gateway"
 	"github.com/sonnnnnnp/reverie/server/usecase/post"
-	"github.com/sonnnnnnp/reverie/server/usecase/timeline"
+	"github.com/sonnnnnnp/reverie/server/usecase/post_timeline"
 	"github.com/sonnnnnnp/reverie/server/usecase/user"
 )
 
@@ -27,9 +27,9 @@ func Wire(pool *pgxpool.Pool) *controller.Controller {
 	callUsecase := call.New(pool)
 	callTimelineUsecase := call_timeline.New(pool)
 	postUsecase := post.New(pool)
+	postTimelineUsecase := post_timeline.New(pool)
 	gatewayUsecase := gateway.New()
-	timelineUsecase := timeline.New(pool)
 	userUsecase := user.New(pool)
-	controllerController := controller.New(authorizeUsecase, callUsecase, callTimelineUsecase, postUsecase, gatewayUsecase, timelineUsecase, userUsecase)
+	controllerController := controller.New(authorizeUsecase, callUsecase, callTimelineUsecase, postUsecase, postTimelineUsecase, gatewayUsecase, userUsecase)
 	return controllerController
 }

@@ -275,22 +275,22 @@ type SearchUsersTypeaheadParams struct {
 	CustomId string `form:"custom_id" json:"custom_id"`
 }
 
-// GetTimelineParams defines parameters for GetTimeline.
-type GetTimelineParams struct {
+// GetPostTimelineParams defines parameters for GetPostTimeline.
+type GetPostTimelineParams struct {
 	// Cursor 次のページを取得するためのキー
 	Cursor *openapi_types.UUID `form:"cursor,omitempty" json:"cursor,omitempty"`
 	Limit  *int                `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetFollowingTimelineParams defines parameters for GetFollowingTimeline.
-type GetFollowingTimelineParams struct {
+// GetFollowingPostTimelineParams defines parameters for GetFollowingPostTimeline.
+type GetFollowingPostTimelineParams struct {
 	// Cursor 次のページを取得するためのキー
 	Cursor *openapi_types.UUID `form:"cursor,omitempty" json:"cursor,omitempty"`
 	Limit  *int                `form:"limit,omitempty" json:"limit,omitempty"`
 }
 
-// GetUserTimelineParams defines parameters for GetUserTimeline.
-type GetUserTimelineParams struct {
+// GetUserPostTimelineParams defines parameters for GetUserPostTimeline.
+type GetUserPostTimelineParams struct {
 	// Cursor 次のページを取得するためのキー
 	Cursor *openapi_types.UUID `form:"cursor,omitempty" json:"cursor,omitempty"`
 	Limit  *int                `form:"limit,omitempty" json:"limit,omitempty"`
@@ -445,14 +445,14 @@ type ClientInterface interface {
 	// SearchUsersTypeahead request
 	SearchUsersTypeahead(ctx context.Context, params *SearchUsersTypeaheadParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetTimeline request
-	GetTimeline(ctx context.Context, params *GetTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetPostTimeline request
+	GetPostTimeline(ctx context.Context, params *GetPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetFollowingTimeline request
-	GetFollowingTimeline(ctx context.Context, params *GetFollowingTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetFollowingPostTimeline request
+	GetFollowingPostTimeline(ctx context.Context, params *GetFollowingPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetUserTimeline request
-	GetUserTimeline(ctx context.Context, userId openapi_types.UUID, params *GetUserTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetUserPostTimeline request
+	GetUserPostTimeline(ctx context.Context, userId openapi_types.UUID, params *GetUserPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetUserBlocking request
 	GetUserBlocking(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -718,8 +718,8 @@ func (c *Client) SearchUsersTypeahead(ctx context.Context, params *SearchUsersTy
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetTimeline(ctx context.Context, params *GetTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetTimelineRequest(c.Server, params)
+func (c *Client) GetPostTimeline(ctx context.Context, params *GetPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPostTimelineRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -730,8 +730,8 @@ func (c *Client) GetTimeline(ctx context.Context, params *GetTimelineParams, req
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetFollowingTimeline(ctx context.Context, params *GetFollowingTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetFollowingTimelineRequest(c.Server, params)
+func (c *Client) GetFollowingPostTimeline(ctx context.Context, params *GetFollowingPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFollowingPostTimelineRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -742,8 +742,8 @@ func (c *Client) GetFollowingTimeline(ctx context.Context, params *GetFollowingT
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetUserTimeline(ctx context.Context, userId openapi_types.UUID, params *GetUserTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetUserTimelineRequest(c.Server, userId, params)
+func (c *Client) GetUserPostTimeline(ctx context.Context, userId openapi_types.UUID, params *GetUserPostTimelineParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetUserPostTimelineRequest(c.Server, userId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -1575,8 +1575,8 @@ func NewSearchUsersTypeaheadRequest(server string, params *SearchUsersTypeaheadP
 	return req, nil
 }
 
-// NewGetTimelineRequest generates requests for GetTimeline
-func NewGetTimelineRequest(server string, params *GetTimelineParams) (*http.Request, error) {
+// NewGetPostTimelineRequest generates requests for GetPostTimeline
+func NewGetPostTimelineRequest(server string, params *GetPostTimelineParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -1640,8 +1640,8 @@ func NewGetTimelineRequest(server string, params *GetTimelineParams) (*http.Requ
 	return req, nil
 }
 
-// NewGetFollowingTimelineRequest generates requests for GetFollowingTimeline
-func NewGetFollowingTimelineRequest(server string, params *GetFollowingTimelineParams) (*http.Request, error) {
+// NewGetFollowingPostTimelineRequest generates requests for GetFollowingPostTimeline
+func NewGetFollowingPostTimelineRequest(server string, params *GetFollowingPostTimelineParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -1705,8 +1705,8 @@ func NewGetFollowingTimelineRequest(server string, params *GetFollowingTimelineP
 	return req, nil
 }
 
-// NewGetUserTimelineRequest generates requests for GetUserTimeline
-func NewGetUserTimelineRequest(server string, userId openapi_types.UUID, params *GetUserTimelineParams) (*http.Request, error) {
+// NewGetUserPostTimelineRequest generates requests for GetUserPostTimeline
+func NewGetUserPostTimelineRequest(server string, userId openapi_types.UUID, params *GetUserPostTimelineParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -2240,14 +2240,14 @@ type ClientWithResponsesInterface interface {
 	// SearchUsersTypeaheadWithResponse request
 	SearchUsersTypeaheadWithResponse(ctx context.Context, params *SearchUsersTypeaheadParams, reqEditors ...RequestEditorFn) (*SearchUsersTypeaheadResponse, error)
 
-	// GetTimelineWithResponse request
-	GetTimelineWithResponse(ctx context.Context, params *GetTimelineParams, reqEditors ...RequestEditorFn) (*GetTimelineResponse, error)
+	// GetPostTimelineWithResponse request
+	GetPostTimelineWithResponse(ctx context.Context, params *GetPostTimelineParams, reqEditors ...RequestEditorFn) (*GetPostTimelineResponse, error)
 
-	// GetFollowingTimelineWithResponse request
-	GetFollowingTimelineWithResponse(ctx context.Context, params *GetFollowingTimelineParams, reqEditors ...RequestEditorFn) (*GetFollowingTimelineResponse, error)
+	// GetFollowingPostTimelineWithResponse request
+	GetFollowingPostTimelineWithResponse(ctx context.Context, params *GetFollowingPostTimelineParams, reqEditors ...RequestEditorFn) (*GetFollowingPostTimelineResponse, error)
 
-	// GetUserTimelineWithResponse request
-	GetUserTimelineWithResponse(ctx context.Context, userId openapi_types.UUID, params *GetUserTimelineParams, reqEditors ...RequestEditorFn) (*GetUserTimelineResponse, error)
+	// GetUserPostTimelineWithResponse request
+	GetUserPostTimelineWithResponse(ctx context.Context, userId openapi_types.UUID, params *GetUserPostTimelineParams, reqEditors ...RequestEditorFn) (*GetUserPostTimelineResponse, error)
 
 	// GetUserBlockingWithResponse request
 	GetUserBlockingWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetUserBlockingResponse, error)
@@ -2739,7 +2739,7 @@ func (r SearchUsersTypeaheadResponse) StatusCode() int {
 	return 0
 }
 
-type GetTimelineResponse struct {
+type GetPostTimelineResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
@@ -2753,7 +2753,7 @@ type GetTimelineResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetTimelineResponse) Status() string {
+func (r GetPostTimelineResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2761,14 +2761,14 @@ func (r GetTimelineResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetTimelineResponse) StatusCode() int {
+func (r GetPostTimelineResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetFollowingTimelineResponse struct {
+type GetFollowingPostTimelineResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
@@ -2782,7 +2782,7 @@ type GetFollowingTimelineResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetFollowingTimelineResponse) Status() string {
+func (r GetFollowingPostTimelineResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2790,14 +2790,14 @@ func (r GetFollowingTimelineResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetFollowingTimelineResponse) StatusCode() int {
+func (r GetFollowingPostTimelineResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetUserTimelineResponse struct {
+type GetUserPostTimelineResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *struct {
@@ -2811,7 +2811,7 @@ type GetUserTimelineResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r GetUserTimelineResponse) Status() string {
+func (r GetUserPostTimelineResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -2819,7 +2819,7 @@ func (r GetUserTimelineResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetUserTimelineResponse) StatusCode() int {
+func (r GetUserPostTimelineResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -3299,31 +3299,31 @@ func (c *ClientWithResponses) SearchUsersTypeaheadWithResponse(ctx context.Conte
 	return ParseSearchUsersTypeaheadResponse(rsp)
 }
 
-// GetTimelineWithResponse request returning *GetTimelineResponse
-func (c *ClientWithResponses) GetTimelineWithResponse(ctx context.Context, params *GetTimelineParams, reqEditors ...RequestEditorFn) (*GetTimelineResponse, error) {
-	rsp, err := c.GetTimeline(ctx, params, reqEditors...)
+// GetPostTimelineWithResponse request returning *GetPostTimelineResponse
+func (c *ClientWithResponses) GetPostTimelineWithResponse(ctx context.Context, params *GetPostTimelineParams, reqEditors ...RequestEditorFn) (*GetPostTimelineResponse, error) {
+	rsp, err := c.GetPostTimeline(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetTimelineResponse(rsp)
+	return ParseGetPostTimelineResponse(rsp)
 }
 
-// GetFollowingTimelineWithResponse request returning *GetFollowingTimelineResponse
-func (c *ClientWithResponses) GetFollowingTimelineWithResponse(ctx context.Context, params *GetFollowingTimelineParams, reqEditors ...RequestEditorFn) (*GetFollowingTimelineResponse, error) {
-	rsp, err := c.GetFollowingTimeline(ctx, params, reqEditors...)
+// GetFollowingPostTimelineWithResponse request returning *GetFollowingPostTimelineResponse
+func (c *ClientWithResponses) GetFollowingPostTimelineWithResponse(ctx context.Context, params *GetFollowingPostTimelineParams, reqEditors ...RequestEditorFn) (*GetFollowingPostTimelineResponse, error) {
+	rsp, err := c.GetFollowingPostTimeline(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetFollowingTimelineResponse(rsp)
+	return ParseGetFollowingPostTimelineResponse(rsp)
 }
 
-// GetUserTimelineWithResponse request returning *GetUserTimelineResponse
-func (c *ClientWithResponses) GetUserTimelineWithResponse(ctx context.Context, userId openapi_types.UUID, params *GetUserTimelineParams, reqEditors ...RequestEditorFn) (*GetUserTimelineResponse, error) {
-	rsp, err := c.GetUserTimeline(ctx, userId, params, reqEditors...)
+// GetUserPostTimelineWithResponse request returning *GetUserPostTimelineResponse
+func (c *ClientWithResponses) GetUserPostTimelineWithResponse(ctx context.Context, userId openapi_types.UUID, params *GetUserPostTimelineParams, reqEditors ...RequestEditorFn) (*GetUserPostTimelineResponse, error) {
+	rsp, err := c.GetUserPostTimeline(ctx, userId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetUserTimelineResponse(rsp)
+	return ParseGetUserPostTimelineResponse(rsp)
 }
 
 // GetUserBlockingWithResponse request returning *GetUserBlockingResponse
@@ -3951,15 +3951,15 @@ func ParseSearchUsersTypeaheadResponse(rsp *http.Response) (*SearchUsersTypeahea
 	return response, nil
 }
 
-// ParseGetTimelineResponse parses an HTTP response from a GetTimelineWithResponse call
-func ParseGetTimelineResponse(rsp *http.Response) (*GetTimelineResponse, error) {
+// ParseGetPostTimelineResponse parses an HTTP response from a GetPostTimelineWithResponse call
+func ParseGetPostTimelineResponse(rsp *http.Response) (*GetPostTimelineResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetTimelineResponse{
+	response := &GetPostTimelineResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -3984,15 +3984,15 @@ func ParseGetTimelineResponse(rsp *http.Response) (*GetTimelineResponse, error) 
 	return response, nil
 }
 
-// ParseGetFollowingTimelineResponse parses an HTTP response from a GetFollowingTimelineWithResponse call
-func ParseGetFollowingTimelineResponse(rsp *http.Response) (*GetFollowingTimelineResponse, error) {
+// ParseGetFollowingPostTimelineResponse parses an HTTP response from a GetFollowingPostTimelineWithResponse call
+func ParseGetFollowingPostTimelineResponse(rsp *http.Response) (*GetFollowingPostTimelineResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetFollowingTimelineResponse{
+	response := &GetFollowingPostTimelineResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -4017,15 +4017,15 @@ func ParseGetFollowingTimelineResponse(rsp *http.Response) (*GetFollowingTimelin
 	return response, nil
 }
 
-// ParseGetUserTimelineResponse parses an HTTP response from a GetUserTimelineWithResponse call
-func ParseGetUserTimelineResponse(rsp *http.Response) (*GetUserTimelineResponse, error) {
+// ParseGetUserPostTimelineResponse parses an HTTP response from a GetUserPostTimelineWithResponse call
+func ParseGetUserPostTimelineResponse(rsp *http.Response) (*GetUserPostTimelineResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetUserTimelineResponse{
+	response := &GetUserPostTimelineResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -4451,13 +4451,13 @@ type ServerInterface interface {
 	SearchUsersTypeahead(ctx echo.Context, params SearchUsersTypeaheadParams) error
 	// オープンのタイムラインを取得する
 	// (GET /timeline)
-	GetTimeline(ctx echo.Context, params GetTimelineParams) error
+	GetPostTimeline(ctx echo.Context, params GetPostTimelineParams) error
 	// フォロー中のタイムラインを取得する
 	// (GET /timeline/following)
-	GetFollowingTimeline(ctx echo.Context, params GetFollowingTimelineParams) error
+	GetFollowingPostTimeline(ctx echo.Context, params GetFollowingPostTimelineParams) error
 	// ユーザーのタイムラインを取得する
 	// (GET /timeline/users/{user_id})
-	GetUserTimeline(ctx echo.Context, userId openapi_types.UUID, params GetUserTimelineParams) error
+	GetUserPostTimeline(ctx echo.Context, userId openapi_types.UUID, params GetUserPostTimelineParams) error
 	// ユーザーのブロック一覧を取得する
 	// (GET /users/blocks)
 	GetUserBlocking(ctx echo.Context) error
@@ -4794,14 +4794,14 @@ func (w *ServerInterfaceWrapper) SearchUsersTypeahead(ctx echo.Context) error {
 	return err
 }
 
-// GetTimeline converts echo context to params.
-func (w *ServerInterfaceWrapper) GetTimeline(ctx echo.Context) error {
+// GetPostTimeline converts echo context to params.
+func (w *ServerInterfaceWrapper) GetPostTimeline(ctx echo.Context) error {
 	var err error
 
 	ctx.Set(BearerScopes, []string{})
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetTimelineParams
+	var params GetPostTimelineParams
 	// ------------- Optional query parameter "cursor" -------------
 
 	err = runtime.BindQueryParameter("form", true, false, "cursor", ctx.QueryParams(), &params.Cursor)
@@ -4817,18 +4817,18 @@ func (w *ServerInterfaceWrapper) GetTimeline(ctx echo.Context) error {
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetTimeline(ctx, params)
+	err = w.Handler.GetPostTimeline(ctx, params)
 	return err
 }
 
-// GetFollowingTimeline converts echo context to params.
-func (w *ServerInterfaceWrapper) GetFollowingTimeline(ctx echo.Context) error {
+// GetFollowingPostTimeline converts echo context to params.
+func (w *ServerInterfaceWrapper) GetFollowingPostTimeline(ctx echo.Context) error {
 	var err error
 
 	ctx.Set(BearerScopes, []string{})
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetFollowingTimelineParams
+	var params GetFollowingPostTimelineParams
 	// ------------- Optional query parameter "cursor" -------------
 
 	err = runtime.BindQueryParameter("form", true, false, "cursor", ctx.QueryParams(), &params.Cursor)
@@ -4844,12 +4844,12 @@ func (w *ServerInterfaceWrapper) GetFollowingTimeline(ctx echo.Context) error {
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetFollowingTimeline(ctx, params)
+	err = w.Handler.GetFollowingPostTimeline(ctx, params)
 	return err
 }
 
-// GetUserTimeline converts echo context to params.
-func (w *ServerInterfaceWrapper) GetUserTimeline(ctx echo.Context) error {
+// GetUserPostTimeline converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUserPostTimeline(ctx echo.Context) error {
 	var err error
 	// ------------- Path parameter "user_id" -------------
 	var userId openapi_types.UUID
@@ -4862,7 +4862,7 @@ func (w *ServerInterfaceWrapper) GetUserTimeline(ctx echo.Context) error {
 	ctx.Set(BearerScopes, []string{})
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetUserTimelineParams
+	var params GetUserPostTimelineParams
 	// ------------- Optional query parameter "cursor" -------------
 
 	err = runtime.BindQueryParameter("form", true, false, "cursor", ctx.QueryParams(), &params.Cursor)
@@ -4878,7 +4878,7 @@ func (w *ServerInterfaceWrapper) GetUserTimeline(ctx echo.Context) error {
 	}
 
 	// Invoke the callback with all the unmarshaled arguments
-	err = w.Handler.GetUserTimeline(ctx, userId, params)
+	err = w.Handler.GetUserPostTimeline(ctx, userId, params)
 	return err
 }
 
@@ -5103,9 +5103,9 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	router.GET(baseURL+"/posts/:post_id/favorites", wrapper.GetPostFavorites)
 	router.POST(baseURL+"/posts/:post_id/favorites", wrapper.FavoritePost)
 	router.GET(baseURL+"/search/users/typeahead", wrapper.SearchUsersTypeahead)
-	router.GET(baseURL+"/timeline", wrapper.GetTimeline)
-	router.GET(baseURL+"/timeline/following", wrapper.GetFollowingTimeline)
-	router.GET(baseURL+"/timeline/users/:user_id", wrapper.GetUserTimeline)
+	router.GET(baseURL+"/timeline", wrapper.GetPostTimeline)
+	router.GET(baseURL+"/timeline/following", wrapper.GetFollowingPostTimeline)
+	router.GET(baseURL+"/timeline/users/:user_id", wrapper.GetUserPostTimeline)
 	router.GET(baseURL+"/users/blocks", wrapper.GetUserBlocking)
 	router.GET(baseURL+"/users/custom_id/:custom_id", wrapper.GetUserByCustomID)
 	router.GET(baseURL+"/users/me", wrapper.GetSelf)
@@ -5155,12 +5155,12 @@ var swaggerSpec = []string{
 	"Fq6o42oCF67xalkaCXd621/8cO9Rnzu13OWKE2SmVfJUbaJJ8iFFlpxVL4os9bD1qijGLNn9YWMVZ4os",
 	"HbZQjgLozkvW+YP4Z5f5O0dPHpZ2ybkQ/ip45wbv0g22YQe04pOHyXDpzouIaVLJeFUn7fC1nNx2rvLm",
 	"shhHkdOFgOjNoGDMJweaEBi5W8RFMVw0CH0aDi7XhPDh9LTI/qmJq60ePHpw+N3XvWv3jh4+UK7CZQ6I",
-	"qzO005YZTu7hcMljgGOeCFdMrpj8M54GD0vmIY+Aq+Pfyk/GP0Up6STSN8SnHu4gx5iJ/rBAlYmeFjN3",
-	"74jQ2GX+q7d7144ePykwc27XfqHVW1XDfvF3HZPXp19QcojYZBXubhahuaJVVn1/jczXn/e2NgvMJz//",
-	"ym2WWBK3l4I/wzKS41HVh46lPmws/pBRcZfQZn9yx/j4MHO34IO+iTlznZRgloxdsnM/S/5wMxBLffIP",
-	"R8SYwBV+ni3B6a+lpoBm/tecibFsZFCNeqYCdSCoCjhVHF6JfzVblMvNxfoqxwPz9xYLI6gmcM8QVlRe",
-	"iaLKgG1DmmhBWTAvXi5AC6+LzGGOYKuiXCnKqb7yn6ylOMU6rqq/Xba7JfJIWX+omPThFTriZeAhI9ag",
-	"5hcxaKxykSpIvZsgFaSxEdcGtlpU3Km4k17gQta02+2fAgAA///j6b/x/VgAAA==",
+	"E986VOdopyQ7nNwD4pJHAcc8Fa7YXLH5Zz4VHpbQQx4FFzO6OgqufGVc0pWSjiL9Q3z24Q5yjpnojwxU",
+	"WelpMXP3jgiPXea/ert37ejxkwIz53bwF1q9VTXvF3/jMXk9+wXlh4hNVuFOZxGaK1pl1ffX1Hz9eW9r",
+	"s8B88lOw3MaJJXF7KfiTLCM5KlV99FjqI8fijxoVdwlt9id3jA8RM3cLPu6bmPPXSQlmydglu/iz5A83",
+	"BLHUJ/+gRIwJXOHn2RKc/rpqCmjmf82ZGMtGBtWrZypQB4KqgFPF4ZX4F7RFudxcrMdyPDB/b7EwgmoC",
+	"9wxhVeWVKKwM2DakiRaUB/Pi5QK08LrIHOYItirKlaKc6ov/yVqKU6zjqvrbZTtdIo+U9YeKSR9eoSNe",
+	"Ch4yYg1qhBGDxioXqYLUuwlSQRobcW1g20XFnYo76QUuZE273f4pAAD//+Qz3QYJWQAA",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
