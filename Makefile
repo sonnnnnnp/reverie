@@ -47,11 +47,11 @@ wire:
 
 #? migrate: データベースの構造をマイグレート
 migrate:
-	docker compose run --rm httpserver bash -c "migrate -source file://migrations -database postgres://user:password@postgres:5432/db?sslmode=disable up"
+	docker compose run --rm httpserver bash -c "cd server && migrate -source file://migrations -database postgres://user:password@postgres:5432/db?sslmode=disable up"
 
 #? migrate-down: データベースの構造を初期化
 migrate-down:
-	docker compose run --rm httpserver bash -c "migrate -source file://migrations -database postgres://user:password@postgres:5432/db?sslmode=disable down"
+	docker compose run --rm httpserver bash -c "cd server && migrate -source file://migrations -database postgres://user:password@postgres:5432/db?sslmode=disable down"
 
 #? seed: データベースへ初期データを投入
 seed:
@@ -59,4 +59,4 @@ seed:
 
 #? sql-gen: SQL クエリから Go コードを生成
 sql-gen:
-	docker compose run --rm httpserver bash -c "sqlc generate"
+	docker compose run --rm httpserver bash -c "cd server && sqlc generate"

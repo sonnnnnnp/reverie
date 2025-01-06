@@ -30,13 +30,14 @@ export function Timeline({
   }, []);
 
   React.useEffect(() => {
-    if (selected && !posts.length) {
+    if (selected) {
+      setPosts([]);
       fetchPosts(type);
     }
-  }, [type, selected, posts, fetchPosts]);
+  }, [type, selected, fetchPosts]);
 
   return (
-    <div className="grid place-items-center pb-[600px]">
+    <div className="grid place-items-center">
       {!posts.length ? (
         <Spinner classNames={{ base: "mt-8" }} />
       ) : (

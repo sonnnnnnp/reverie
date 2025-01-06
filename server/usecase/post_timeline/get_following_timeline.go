@@ -1,4 +1,4 @@
-package timeline
+package post_timeline
 
 import (
 	"context"
@@ -13,7 +13,7 @@ import (
 	internal_errors "github.com/sonnnnnnp/reverie/server/pkg/errors"
 )
 
-func (uc *TimelineUsecase) GetTimeline(ctx context.Context, params *api.GetTimelineParams) (posts []api.Post, nextCursor uuid.UUID, err error) {
+func (uc *PostTimelineUsecase) GetFollowingPostTimeline(ctx context.Context, params *api.GetFollowingPostTimelineParams) (posts []api.Post, nextCursor uuid.UUID, err error) {
 	selfUID := ctxhelper.GetUserID(ctx)
 
 	queries := db.New(uc.pool)
@@ -43,7 +43,7 @@ func (uc *TimelineUsecase) GetTimeline(ctx context.Context, params *api.GetTimel
 	}
 
 	// タイムラインを取得
-	rows, err := queries.GetTimeline(ctx, db.GetTimelineParams{
+	rows, err := queries.GetFollowingPostTimeline(ctx, db.GetFollowingPostTimelineParams{
 		SelfID:    selfUID,
 		CreatedAt: fromCursor,
 		Limit:     int64(*params.Limit),

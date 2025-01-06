@@ -1,4 +1,5 @@
-import { Listbox, ListboxItem, cn } from "@nextui-org/react";
+import { Listbox, ListboxItem } from "@nextui-org/react";
+import { cn } from "~/utils/cn";
 import {
   SolarForbiddenCircleLinear,
   SolarMutedLinear,

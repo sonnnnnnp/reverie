@@ -1,6 +1,6 @@
 import createClient, { type Middleware } from "openapi-fetch";
 
-import { Cookie } from "~/lib/cookies";
+import { Cookie } from "~/store/cookies";
 import type { paths } from "./client";
 
 interface responseBody {

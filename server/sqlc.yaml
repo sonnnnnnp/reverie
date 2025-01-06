@@ -2,19 +2,19 @@ version: "2"
 sql:
   - engine: "postgresql"
     queries:
-      - ./server/infra/db/queries/call
-      - ./server/infra/db/queries/call_timeline
-      - ./server/infra/db/queries/post_favorites
-      - ./server/infra/db/queries/posts
-      - ./server/infra/db/queries/timeline
-      - ./server/infra/db/queries/user_blocks
-      - ./server/infra/db/queries/user_follows
-      - ./server/infra/db/queries/users
+      - ./infra/db/queries/call
+      - ./infra/db/queries/call_timeline
+      - ./infra/db/queries/post_favorites
+      - ./infra/db/queries/post_timeline
+      - ./infra/db/queries/posts
+      - ./infra/db/queries/user_blocks
+      - ./infra/db/queries/user_follows
+      - ./infra/db/queries/users
     schema: "./migrations"
     gen:
       go:
         package: "db"
-        out: "./server/infra/db"
+        out: "./infra/db"
         sql_package: pgx/v5
         emit_json_tags: true
         emit_interface: true

@@ -324,7 +324,7 @@ export interface paths {
             cookie?: never;
         };
         /** オープンのタイムラインを取得する */
-        get: operations["getTimeline"];
+        get: operations["getPostTimeline"];
         put?: never;
         post?: never;
         delete?: never;
@@ -341,7 +341,7 @@ export interface paths {
             cookie?: never;
         };
         /** ユーザーのタイムラインを取得する */
-        get: operations["getUserTimeline"];
+        get: operations["getUserPostTimeline"];
         put?: never;
         post?: never;
         delete?: never;
@@ -358,7 +358,7 @@ export interface paths {
             cookie?: never;
         };
         /** フォロー中のタイムラインを取得する */
-        get: operations["getFollowingTimeline"];
+        get: operations["getFollowingPostTimeline"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1231,7 +1231,7 @@ export interface operations {
             };
         };
     };
-    getTimeline: {
+    getPostTimeline: {
         parameters: {
             query?: {
                 /** @description 次のページを取得するためのキー */
@@ -1261,7 +1261,7 @@ export interface operations {
             };
         };
     };
-    getUserTimeline: {
+    getUserPostTimeline: {
         parameters: {
             query?: {
                 /** @description 次のページを取得するためのキー */
@@ -1293,7 +1293,7 @@ export interface operations {
             };
         };
     };
-    getFollowingTimeline: {
+    getFollowingPostTimeline: {
         parameters: {
             query?: {
                 /** @description 次のページを取得するためのキー */

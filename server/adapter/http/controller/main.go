@@ -7,7 +7,7 @@ import (
 	"github.com/sonnnnnnp/reverie/server/usecase/call_timeline"
 	"github.com/sonnnnnnp/reverie/server/usecase/gateway"
 	"github.com/sonnnnnnp/reverie/server/usecase/post"
-	"github.com/sonnnnnnp/reverie/server/usecase/timeline"
+	"github.com/sonnnnnnp/reverie/server/usecase/post_timeline"
 	"github.com/sonnnnnnp/reverie/server/usecase/user"
 )
 
@@ -16,8 +16,8 @@ type Controller struct {
 	callUsecase         *call.CallUsecase
 	callTimelineUsecase *call_timeline.CallTimelineUsecase
 	postUsecase         *post.PostUsecase
+	postTimelineUsecase *post_timeline.PostTimelineUsecase
 	gatewayUsecase      *gateway.GatewayUsecase
-	timelineUsecase     *timeline.TimelineUsecase
 	userUsecase         *user.UserUsecase
 }
 
@@ -26,8 +26,8 @@ func New(
 	callUsecase *call.CallUsecase,
 	callTimelineUsecase *call_timeline.CallTimelineUsecase,
 	postUsecase *post.PostUsecase,
+	postTimelineUsecase *post_timeline.PostTimelineUsecase,
 	gatewayUsecase *gateway.GatewayUsecase,
-	timelineUsecase *timeline.TimelineUsecase,
 	userUsecase *user.UserUsecase,
 ) *Controller {
 	return &Controller{
@@ -35,8 +35,8 @@ func New(
 		callUsecase:         callUsecase,
 		callTimelineUsecase: callTimelineUsecase,
 		postUsecase:         postUsecase,
+		postTimelineUsecase: postTimelineUsecase,
 		gatewayUsecase:      gatewayUsecase,
-		timelineUsecase:     timelineUsecase,
 		userUsecase:         userUsecase,
 	}
 }

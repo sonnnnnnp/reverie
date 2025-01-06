@@ -1,4 +1,5 @@
 import { Avatar, Badge, Tab, Tabs } from "@nextui-org/react";
+import type { components } from "~/api/client";
 import {
   SolarBellLinear,
   SolarHome2Linear,
@@ -6,9 +7,12 @@ import {
   SolarUsersGroupTwoRoundedLinear,
 } from "~/components/icons";
 
-export function MobileNavigation({ pathname }: { pathname: string }) {
+export function MobileNavigation({
+  pathname,
+  me,
+}: { pathname: string; me: components["schemas"]["User"] | null }) {
   return (
-    <div className="fixed bottom-0 w-full backdrop-blur-md z-[99] border-t sm:hidden">
+    <div className="fixed bottom-0 w-full bg-background z-[99] border-t sm:hidden">
       <Tabs
         fullWidth
         selectedKey={pathname}
@@ -38,12 +42,12 @@ export function MobileNavigation({ pathname }: { pathname: string }) {
         />
         <Tab
           key="/users"
-          href="/users"
+          href={`/@${me?.custom_id}`}
           title={
             <Avatar
               isBordered
               size="sm"
-              src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+              src={me?.avatar_image_url ?? undefined}
             />
           }
         />

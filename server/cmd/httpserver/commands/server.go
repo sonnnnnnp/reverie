@@ -12,7 +12,6 @@ import (
 	"github.com/sonnnnnnp/reverie/server/config"
 	"github.com/sonnnnnnp/reverie/server/infra/db"
 	"github.com/sonnnnnnp/reverie/server/pkg/errors"
-	"github.com/sonnnnnnp/reverie/server/pkg/ws"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
@@ -43,9 +42,6 @@ func Run(cfg *config.Config) {
 		"^/authorize/.*",
 	}
 
-	websocket := ws.NewHub()
-	go websocket.Listen()
-
 	swagger, err := api.GetSwagger()
 	if err != nil {
 		panic(err)
@@ -55,7 +51,6 @@ func Run(cfg *config.Config) {
 	e.Use(echomiddleware.CORSWithConfig(middlewarecfg))
 	e.Use(middleware.Config(cfg))
 	e.Use(middleware.JWT(jwtExcludePaths))
-	e.Use(middleware.WebSocket(websocket))
 	e.Use(middleware.RequestValidator(swagger))
 
 	api.RegisterHandlers(e, Wire(pool))

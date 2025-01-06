@@ -1,27 +1,35 @@
-import Cookies from "js-cookie";
 import React from "react";
+import client from "~/api";
+import type { components } from "~/api/client";
 
-const AuthContext = React.createContext(null);
+const AuthContext = React.createContext<components["schemas"]["User"] | null>(
+  null,
+);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = React.useState<components["schemas"]["User"] | null>(
+    null,
+  );
 
-  React.useEffect(() => {
-    console.log("check cookies");
-
-    if (!Cookies.get("access-token")) {
+  const authenticate = React.useCallback(async () => {
+    const { data } = await client.GET("/users/me");
+    if (!data?.ok) {
       window.location.href = "/";
       return;
     }
 
-    console.log("welcome user!");
+    setUser(data.data);
 
-    setUser(null);
+    console.log(`welcome ${data.data.nickname}!`);
   }, []);
+
+  React.useEffect(() => {
+    authenticate();
+  }, [authenticate]);
 
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
-  React.useContext(AuthContext);
+  return React.useContext(AuthContext);
 }

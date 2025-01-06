@@ -1,8 +1,11 @@
 import { Avatar, Button } from "@nextui-org/react";
 import { Link } from "react-router";
+import type { components } from "~/api/client";
 import { SolarLetterLinear, SolarMagniferLinear } from "../icons";
 
-export default function UserProfile() {
+export default function UserProfile({
+  user,
+}: { user: components["schemas"]["User"] | null }) {
   return (
     <div className="w-full">
       <div className="relative w-full">
@@ -13,10 +16,10 @@ export default function UserProfile() {
         />
         <Avatar
           className="absolute -bottom-10 left-4 w-24 h-24"
-          src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+          src={user?.avatar_image_url ?? undefined}
         />
       </div>
-      <div className="flex justify-end space-x-2 pt-4 px-6">
+      <div className="flex justify-end gap-2 pt-4 px-6">
         <Button
           isIconOnly
           variant="bordered"
@@ -39,21 +42,27 @@ export default function UserProfile() {
       </div>
       <div className="grid gap-4 px-6 pb-2 text-sm">
         <div className="flex flex-col">
-          <span className="font-bold text-medium">ユーザー名</span>
-          <span className="text-foreground-400">@username</span>
+          <span className="font-bold text-medium">{user?.nickname}</span>
+          <span className="text-foreground-400">@{user?.custom_id}</span>
         </div>
-        <p>
-          自己紹介文がここに入ります。
-          <br />
-          そうです。ここです。
-        </p>
+        <p>{user?.biography}</p>
         <div className="flex gap-3 text-xs">
-          <Link to="/users/user_id/following" className="hover:underline">
-            <span className="font-bold mr-1">24</span>
+          <Link
+            to={`/@${user?.custom_id}/following`}
+            className="hover:underline"
+          >
+            <span className="font-bold mr-1">
+              {user?.social_engagement?.following_count}
+            </span>
             <span className="text-foreground-400">フォロー中</span>
           </Link>
-          <Link to="/users/user_id/following" className="hover:underline">
-            <span className="font-bold mr-1">132</span>
+          <Link
+            to={`/@${user?.custom_id}/followers`}
+            className="hover:underline"
+          >
+            <span className="font-bold mr-1">
+              {user?.social_engagement?.followers_count}
+            </span>
             <span className="text-foreground-400">フォロワー</span>
           </Link>
         </div>

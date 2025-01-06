@@ -13,7 +13,12 @@ type Response struct {
 }
 
 func JSON(ctx echo.Context, code int, data interface{}) error {
-	return ctx.JSON(http.StatusOK, &Response{
+	httpStatus := http.StatusOK
+	if code != http.StatusOK {
+		httpStatus = http.StatusBadRequest
+	}
+
+	return ctx.JSON(httpStatus, &Response{
 		Code: code,
 		OK:   code == http.StatusOK,
 		Data: data,

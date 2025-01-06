@@ -9,8 +9,8 @@ import (
 	"github.com/sonnnnnnp/reverie/server/pkg/response"
 )
 
-func (c Controller) GetTimeline(ctx echo.Context, params api.GetTimelineParams) error {
-	posts, nextCursor, err := c.timelineUsecase.GetTimeline(ctx.Request().Context(), &params)
+func (c Controller) GetPostTimeline(ctx echo.Context, params api.GetPostTimelineParams) error {
+	posts, nextCursor, err := c.postTimelineUsecase.GetPostTimeline(ctx.Request().Context(), &params)
 	if err != nil {
 		return err
 	}
@@ -21,8 +21,8 @@ func (c Controller) GetTimeline(ctx echo.Context, params api.GetTimelineParams) 
 	})
 }
 
-func (c Controller) GetFollowingTimeline(ctx echo.Context, params api.GetFollowingTimelineParams) error {
-	posts, nextCursor, err := c.timelineUsecase.GetFollowingTimeline(ctx.Request().Context(), &params)
+func (c Controller) GetFollowingPostTimeline(ctx echo.Context, params api.GetFollowingPostTimelineParams) error {
+	posts, nextCursor, err := c.postTimelineUsecase.GetFollowingPostTimeline(ctx.Request().Context(), &params)
 	if err != nil {
 		return err
 	}
@@ -33,8 +33,8 @@ func (c Controller) GetFollowingTimeline(ctx echo.Context, params api.GetFollowi
 	})
 }
 
-func (c Controller) GetUserTimeline(ctx echo.Context, uID uuid.UUID, params api.GetUserTimelineParams) error {
-	posts, nextCursor, err := c.timelineUsecase.GetUserTimeline(ctx.Request().Context(), uID, &params)
+func (c Controller) GetUserPostTimeline(ctx echo.Context, uID uuid.UUID, params api.GetUserPostTimelineParams) error {
+	posts, nextCursor, err := c.postTimelineUsecase.GetUserPostTimeline(ctx.Request().Context(), uID, &params)
 	if err != nil {
 		return err
 	}

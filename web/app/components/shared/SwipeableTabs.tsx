@@ -1,4 +1,3 @@
-import { cn } from "@nextui-org/react";
 import {
   type AnimationPlaybackControls,
   animate,
@@ -16,6 +15,7 @@ import {
   Collection,
   type Key,
 } from "react-aria-components";
+import { cn } from "~/utils/cn";
 
 type Tab = {
   key: string;
@@ -164,14 +164,14 @@ export function SwipeableTabs({
           items={tabs}
           className={cn("flex h-14", classNames?.tabList)}
         >
-                {(tab) => (
+          {(tab) => (
             <AriaTab
               className={cn(
-                "grid place-items-center w-full cursor-pointer text-small text-default-500 transition-opacity outline-0 focus:ring-0 rac-hover:opacity-disabled rac-hover:rac-selected:opacity-100 rac-selected:text-foreground",
+                "grid place-items-center w-full cursor-pointer text-default-500 transition-opacity outline-0 focus:ring-0 rac-hover:opacity-disabled rac-hover:rac-selected:opacity-100 rac-selected:text-foreground",
                 classNames?.tab,
               )}
             >
-              <span className={cn("font-medium", classNames?.title)}>
+              <span className={cn("text-small font-medium", classNames?.title)}>
                 {tab.title}
               </span>
             </AriaTab>
@@ -180,7 +180,7 @@ export function SwipeableTabs({
         <motion.span
           style={{ x, width: indicatorWidth }}
           className={cn(
-            "absolute bottom-0 h-0.5 z-10 bg-content1-foreground rounded-full",
+            "absolute bottom-0 h-1 z-10 bg-primary rounded-full",
             classNames?.cursor,
           )}
         />
@@ -188,7 +188,7 @@ export function SwipeableTabs({
       <div
         ref={tabPanelsRef}
         className={cn(
-          "flex w-full overflow-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
+          "flex w-full overflow-x-auto snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]",
           classNames?.panelWrapper,
         )}
       >
@@ -197,7 +197,7 @@ export function SwipeableTabs({
             <AriaTabPanel
               shouldForceMount
               className={cn(
-                "w-full snap-start snap-always flex-shrink-0",
+                "w-full h-full snap-start snap-always flex-shrink-0",
                 classNames?.panel,
               )}
             >

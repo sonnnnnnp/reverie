@@ -1,7 +1,6 @@
-"use client";
-import { cn } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import { createNoise3D } from "simplex-noise";
+import { cn } from "~/utils/cn";
 
 export const WavyBackground = ({
   children,
