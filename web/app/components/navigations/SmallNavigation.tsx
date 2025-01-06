@@ -5,6 +5,7 @@ import {
   ListboxItem,
   useDisclosure,
 } from "@nextui-org/react";
+import type { components } from "~/api/client";
 import {
   SolarBellLinear,
   SolarHome2Linear,
@@ -16,7 +17,10 @@ import {
 } from "~/components/icons";
 import { PostModal } from "../posts/PostModal";
 
-export function SmallNavigation({ pathname }: { pathname: string }) {
+export function SmallNavigation({
+  pathname,
+  me,
+}: { pathname: string; me: components["schemas"]["User"] | null }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -83,13 +87,13 @@ export function SmallNavigation({ pathname }: { pathname: string }) {
         />
         <ListboxItem
           key="/users"
-          href="/users"
+          href={`/@${me?.custom_id}`}
           title="プロフィール"
           startContent={
             <Avatar
               isBordered
-              src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-              className="w-6 h-6"
+              src={me?.avatar_image_url ?? undefined}
+              classNames={{ base: "flex-shrink-0 w-6 h-6" }}
             />
           }
         />

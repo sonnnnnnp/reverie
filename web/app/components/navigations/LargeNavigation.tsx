@@ -10,6 +10,7 @@ import {
   User,
   useDisclosure,
 } from "@nextui-org/react";
+import type { components } from "~/api/client";
 import {
   SolarBellLinear,
   SolarHome2Linear,
@@ -22,7 +23,10 @@ import { SolarPenLinear } from "~/components/icons/solar/linear/SolarPenLinear";
 import { SolarUsersGroupTwoRoundedLinear } from "~/components/icons/solar/linear/SolarUsersGroupTwoRoundedLinear";
 import { PostModal } from "~/components/posts/PostModal";
 
-export function LargeNavigation({ pathname }: { pathname: string }) {
+export function LargeNavigation({
+  pathname,
+  me,
+}: { pathname: string; me: components["schemas"]["User"] | null }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -35,10 +39,10 @@ export function LargeNavigation({ pathname }: { pathname: string }) {
               className="justify-start"
               classNames={{ name: "font-bold" }}
               avatarProps={{
-                src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+                src: me?.avatar_image_url ?? undefined,
               }}
-              description="@username"
-              name="ユーザー名"
+              description={`@${me?.custom_id}`}
+              name={`${me?.nickname}`}
             />
           </PopoverTrigger>
           <PopoverContent className="p-4">
@@ -124,7 +128,7 @@ export function LargeNavigation({ pathname }: { pathname: string }) {
         />
         <ListboxItem
           key="/users"
-          href="/users"
+          href={`/@${me?.custom_id}`}
           title="プロフィール"
           startContent={
             <span className="flex items-center gap-4 ml-2 text-small font-medium">

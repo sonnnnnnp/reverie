@@ -1,11 +1,13 @@
 import { Button, ModalHeader } from "@nextui-org/react";
 import { MaterialSymbolsCloseRounded } from "../icons";
 
+export type PostModalHeaderActionKey = "close" | "draft" | "create";
+
 export function PostModalHeader({
   onAction,
   isReply,
 }: {
-  onAction?: (key: "close" | "draft" | "submit") => void;
+  onAction?: (key: PostModalHeaderActionKey) => void;
   isReply?: boolean;
 }) {
   return (
@@ -31,7 +33,7 @@ export function PostModalHeader({
         radius="full"
         color="primary"
         className="font-medium"
-        onPress={() => onAction?.("submit")}
+        onPress={() => onAction?.("create")}
       >
         {isReply ? "返信" : "投稿"}
       </Button>

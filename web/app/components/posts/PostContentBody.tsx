@@ -1,8 +1,9 @@
+import type { components } from "~/api/client";
 import { cn } from "~/utils/cn";
 
 export function PostContentBody({
   className,
-  text,
-}: { className?: string; text?: string }) {
-  return <p className={cn("break-all", className)}>{text}</p>;
+  post,
+}: { className?: string; post: components["schemas"]["Post"] }) {
+  return <p className={cn("break-all", className)}>{post.text}</p>;
 }

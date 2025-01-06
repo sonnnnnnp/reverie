@@ -6,8 +6,12 @@ import {
 } from "../icons";
 
 export function PostModalFooter({
+  weightedTextLength,
+  maxWeightedTextLength = 280,
   onAction,
 }: {
+  weightedTextLength: number;
+  maxWeightedTextLength: number;
   onAction?: (key: "media" | "survey" | "audio") => void;
 }) {
   return (
@@ -41,8 +45,12 @@ export function PostModalFooter({
         <SolarMicrophone2Linear className="w-6 h-6" />
       </Button>
       <CircularProgress
-        color="primary"
-        value={43}
+        showValueLabel={maxWeightedTextLength - weightedTextLength <= 15}
+        color={
+          maxWeightedTextLength - weightedTextLength <= 0 ? "danger" : "primary"
+        }
+        valueLabel={String(maxWeightedTextLength - weightedTextLength)}
+        value={weightedTextLength}
         classNames={{ svg: "w-6 h-6" }}
       />
     </ModalFooter>
