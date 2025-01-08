@@ -1,6 +1,7 @@
 import {
   Badge,
   Button,
+  CircularProgress,
   Divider,
   Listbox,
   ListboxItem,
@@ -33,18 +34,22 @@ export function LargeNavigation({
     <div className="sticky inset-y-0 h-dvh w-24 p-2 flex-shrink-0 border-r hidden lg:block lg:w-64 lg:p-6">
       <div className="flex flex-col gap-5 px-2 pt-4">
         <Popover showArrow placement="bottom">
-          <PopoverTrigger>
-            <User
-              as="button"
-              className="justify-start"
-              classNames={{ name: "font-bold" }}
-              avatarProps={{
-                src: me?.avatar_image_url ?? undefined,
-              }}
-              description={`@${me?.custom_id}`}
-              name={`${me?.nickname}`}
-            />
-          </PopoverTrigger>
+          {me ? (
+            <PopoverTrigger>
+              <User
+                as="button"
+                className="justify-start"
+                classNames={{ name: "font-bold" }}
+                avatarProps={{
+                  src: me?.avatar_image_url ?? undefined,
+                }}
+                description={`@${me?.custom_id}`}
+                name={`${me?.nickname}`}
+              />
+            </PopoverTrigger>
+          ) : (
+            <CircularProgress className="mx-auto" />
+          )}
           <PopoverContent className="p-4">
             ユーザー切り替え実装予定
           </PopoverContent>

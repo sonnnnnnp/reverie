@@ -44,11 +44,13 @@ export function MobileNavigation({
           key="/users"
           href={`/@${me?.custom_id}`}
           title={
-            <Avatar
-              isBordered
-              size="sm"
-              src={me?.avatar_image_url ?? undefined}
-            />
+            me && (
+              <Avatar
+                isBordered
+                size="sm"
+                src={me?.avatar_image_url ?? undefined}
+              />
+            )
           }
         />
       </Tabs>
