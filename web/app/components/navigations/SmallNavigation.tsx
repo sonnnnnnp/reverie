@@ -90,11 +90,13 @@ export function SmallNavigation({
           href={`/@${me?.custom_id}`}
           title="プロフィール"
           startContent={
-            <Avatar
-              isBordered
-              src={me?.avatar_image_url ?? undefined}
-              classNames={{ base: "flex-shrink-0 w-6 h-6" }}
-            />
+            me && (
+              <Avatar
+                isBordered
+                src={me?.avatar_image_url ?? undefined}
+                classNames={{ base: "flex-shrink-0 w-6 h-6" }}
+              />
+            )
           }
         />
       </Listbox>

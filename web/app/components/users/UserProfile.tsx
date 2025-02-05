@@ -1,7 +1,11 @@
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button, CircularProgress } from "@nextui-org/react";
 import { Link } from "react-router";
 import type { components } from "~/api/client";
-import { SolarLetterLinear, SolarMagniferLinear } from "../icons";
+import {
+  SolarLetterLinear,
+  SolarMagniferLinear,
+  SolarPlayBold,
+} from "../icons";
 
 export default function UserProfile({
   user,
@@ -14,10 +18,29 @@ export default function UserProfile({
           alt="banner-image"
           className="object-cover w-full h-40"
         />
-        <Avatar
-          className="absolute -bottom-10 left-4 w-24 h-24"
-          src={user?.avatar_image_url ?? undefined}
-        />
+        <div className="absolute flex justify-center items-center gap-1 w-44 h-12 p-1 bg-background/40 backdrop-blur-md top-2 right-2 rounded-full">
+          <div className="relative">
+            <CircularProgress size="md" value={30} className="sticky" />
+            <Button
+              isIconOnly
+              size="sm"
+              radius="full"
+              className="absolute top-1 left-1 bg-background"
+            >
+              <SolarPlayBold className="w-5 h-5" />
+            </Button>
+          </div>
+          <div className="grid w-full text-tiny text-nowrap truncate">
+            <span>Debussy - Rêverie</span>
+            <span className="text-[8px]">Claude Achille Debussy</span>
+          </div>
+        </div>
+        {user && (
+          <Avatar
+            className="absolute -bottom-10 left-4 w-24 h-24"
+            src={user?.avatar_image_url ?? undefined}
+          />
+        )}
       </div>
       <div className="flex justify-end gap-2 pt-4 px-6">
         <Button
